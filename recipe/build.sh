@@ -10,6 +10,14 @@ export LDFLAGS="$LDFLAGS -s"
 # de-init unneeded qemu submodule
 # git -C ./riscv-gnu-toolchain submodule deinit --force qemu
 
+if [ -n "${TOOLCHAIN_COMMIT}" ]; then
+    echo "Pinning toolchain to commit ${TOOLCHAIN_COMMIT}"
+    pushd riscv-gnu-toolchain
+    git fetch origin "${TOOLCHAIN_COMMIT}"
+    git checkout "${TOOLCHAIN_COMMIT}"
+    popd
+fi
+
 NPROC=$CPU_COUNT ./build-toolchains.sh --prefix $PREFIX/$TOOLCHAIN_NAME --clean-after-install
 
 # create activate & deactivate scripts that manage the toolchain
