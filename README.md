@@ -106,4 +106,5 @@ Feedstock Maintainers
 =====================
 
 * [@abejgonzalez](https://github.com/abejgonzalez/)
+* [@jimfangx](https://github.com/jimfangx/)
 
