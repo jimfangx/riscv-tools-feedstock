@@ -1,3 +1,7 @@
 [submodule "riscv-gnu-toolchain"]
 	path = riscv-gnu-toolchain
 	url = https://github.com/riscv-collab/riscv-gnu-toolchain.git
+	# conda-build's `git submodule update --init --recursive` skips update=none
+	# submodules, so it won't recursively clone the toolchain's own submodules
+	# (llvm/qemu/etc). recipe/build.sh checks this out and inits only what's needed.
+	update = none
