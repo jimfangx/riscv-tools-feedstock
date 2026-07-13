@@ -16,7 +16,7 @@ MULTILIB=1 # enables -march=rv64gcv, -march=rv32i etc
 
 # TOOLCHAIN_GCC: which gcc version to target
 #   16 -> gcc-16 / gdb-16 / binutils-2.46  (tag 2026.07.12) - lts
-#   14 -> gcc-14 / gdb-15 / binutils-2.43  (tag 2025.01.20) - last stable chipyard
+#   14 -> gcc-14 / gdb-15 / binutils-2.44  (tag 2025.05.01) - last gcc-14 toolchain upstream
 # to change to other versions, search `2026.07.12` to go to snippet
 TOOLCHAIN_GCC="${TOOLCHAIN_GCC:-16}"
 # ------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ pushd riscv-gnu-toolchain
 
 case "${TOOLCHAIN_GCC}" in
     16) TOOLCHAIN_COMMIT="${TOOLCHAIN_COMMIT:-2e37feb36e1152e965c56d29c0623d68b156c461}" ;;  # tag 2026.07.12
-    14) TOOLCHAIN_COMMIT="${TOOLCHAIN_COMMIT:-a33dac0251d17a7b74d99bd8fd401bfce87d2aed}" ;;  # tag 2025.01.20
+    14) TOOLCHAIN_COMMIT="${TOOLCHAIN_COMMIT:-ec4e967e3bc4ca71de3abb057f776fd8e08f141f}" ;;  # tag 2025.05.01
     *)  echo "ERROR: TOOLCHAIN_GCC must be 14 or 16 (got '${TOOLCHAIN_GCC}')"; exit 1 ;;
 esac
 echo "Checking out toolchain commit ${TOOLCHAIN_COMMIT}"
