@@ -1,10 +1,2 @@
 channel_targets:
   - ucb-bar main
-
-# Host compiler used to *build* the toolchain. Two values => conda-build produces
-# two builds per run (one per GCC), and after a smithy rerender these become
-# separate CI jobs (2 arch x 2 gcc). gcc 14 avoids the -Wincompatible-pointer-types
-# hard error that gcc >=14 turns on; the >=15 value tests the latest stable.
-host_gcc:
-  - ">=14,<15"
-  - ">=15,<16"

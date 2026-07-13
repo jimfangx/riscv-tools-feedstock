@@ -4,6 +4,16 @@ set -ex
 
 TOOLCHAIN_NAME=riscv-tools
 
+# --- RISC-V target configuration (passed through to build-toolchains.sh) ------
+# ARCH / ABI : leave empty to use the toolchain default. With MULTILIB=1 the
+#              toolchain builds the full multilib set and ARCH/ABI (if set) just
+#              choose the default among them.  e.g. ARCH=rv64gc  ABI=lp64d
+# MULTILIB   : 1 to build multilib variants (--enable-multilib), empty to disable
+ARCH="rv64gc"
+ABI="lp64d"
+MULTILIB=1 # enables -march=rv64gcv, -march=rv32i etc
+# ------------------------------------------------------------------------------
+
 # strip debugging info
 export LDFLAGS="$LDFLAGS -s"
 
@@ -61,7 +71,12 @@ popd
 _NCPU="${CPU_COUNT:-$(nproc)}"
 NPROC=$(( _NCPU > 1 ? _NCPU - 1 : 1 ))
 echo "Building with -j ${NPROC} (of ${_NCPU} available cores)"
-NPROC=$NPROC ./build-toolchains.sh --prefix $PREFIX/$TOOLCHAIN_NAME --clean-after-install
+NPROC=$NPROC ./build-toolchains.sh \
+    --prefix "$PREFIX/$TOOLCHAIN_NAME" \
+    --clean-after-install \
+    ${MULTILIB:+--multilib} \
+    ${ARCH:+--arch $ARCH} \
+    ${ABI:+--abi $ABI}
 
 # create activate & deactivate scripts that manage the toolchain
 mkdir -p "${PREFIX}"/etc/conda/{de,}activate.d
